@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TP03_BATIER_LOU</string>
+    <string name="neighborButtonImage">neighbor button image</string>
+    <string name="neighborImageView">neighbor image view</string>
+    <string name="personIcon">person icon</string>
+    <string name="imageField">Image</string>
+    <string name="telField">Phone number</string>
+    <string name="nameField">Name</string>
+    <string name="siteField">Website</string>
+    <string name="mailField">Mail</string>
+    <string name="aboutField">About</string>
+    <string name="saveButton">Save</string>
+    <string name="deleteIcon">delete icon</string>
+
+    <string name="err_image">Image URL is incorrect</string>
+    <string name="err_tel">Phone number should be 0X XX XX XX XX XX</string>
+    <string name="err_site">Website URL is incorrect</string>
+    <string name="err_mail">Mail address is incorrect</string>
+    <string name="err_about">Maximum amount of characters is 30</string>
+
+    <string name="personAddIcon">person add icon</string>
+    <string name="list_fragment_title">Neighbors list</string>
+    <string name="add_fragment_title">New neighbor</string>
+</resources>

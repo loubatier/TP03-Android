@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">TP03_BATIER_LOU</string>
+    <string name="neighborButtonImage">neighbor button image</string>
+    <string name="neighborImageView">neighbor image view</string>
+    <string name="personIcon">person icon</string>
+    <string name="imageField">Image</string>
+    <string name="telField">Téléphone</string>
+    <string name="nameField">Nom</string>
+    <string name="siteField">Site web</string>
+    <string name="mailField">Email</string>
+    <string name="aboutField">À propos de moi</string>
+    <string name="saveButton">Enregistrer</string>
+    <string name="deleteIcon">delete icon</string>
+
+    <string name="err_image">L\'adresse de l\'image est incorrecte</string>
+    <string name="err_tel">Le format du numéro doit être 0X XX XX XX XX XX</string>
+    <string name="err_site">L\'adresse du site web est incorrecte</string>
+    <string name="err_mail">L\'adresse mail est incorrecte</string>
+    <string name="err_about">Le nombre de caractères maximum est de 30</string>
+
+    <string name="personAddIcon">person add icon</string>
+    <string name="list_fragment_title">Liste des voisins</string>
+    <string name="add_fragment_title">Nouveau voisin</string>
+</resources>
