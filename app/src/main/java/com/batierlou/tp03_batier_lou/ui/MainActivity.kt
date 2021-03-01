@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.batierlou.tp03_batier_lou.NavigationListener
 import com.batierlou.tp03_batier_lou.R
 import com.batierlou.tp03_batier_lou.databinding.ActivityMainBinding
+import com.batierlou.tp03_batier_lou.di.DI
 import com.batierlou.tp03_batier_lou.ui.fragments.ListNeighborsFragment
 
 class MainActivity : AppCompatActivity(), NavigationListener {
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity(), NavigationListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DI.inject(application)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

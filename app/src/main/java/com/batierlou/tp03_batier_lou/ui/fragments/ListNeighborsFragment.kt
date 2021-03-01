@@ -1,13 +1,13 @@
 package com.batierlou.tp03_batier_lou.ui.fragments
 
 import android.app.AlertDialog
-import android.app.Application
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.batierlou.tp03_batier_lou.NavigationListener
@@ -15,14 +15,15 @@ import com.batierlou.tp03_batier_lou.R
 import com.batierlou.tp03_batier_lou.adapters.ListNeighborHandler
 import com.batierlou.tp03_batier_lou.adapters.ListNeighborsAdapter
 import com.batierlou.tp03_batier_lou.databinding.ListNeighborsFragmentBinding
+import com.batierlou.tp03_batier_lou.di.DI
 import com.batierlou.tp03_batier_lou.models.Neighbor
-import com.batierlou.tp03_batier_lou.repositories.NeighborRepository
+import com.batierlou.tp03_batier_lou.viewmodels.NeighborViewModel
 import java.util.concurrent.Executors
 
 class ListNeighborsFragment : Fragment(), ListNeighborHandler {
 
     private lateinit var binding: ListNeighborsFragmentBinding
-    private lateinit var adapter: ListNeighborsAdapter
+    private lateinit var viewModel: NeighborViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +42,11 @@ class ListNeighborsFragment : Fragment(), ListNeighborHandler {
             )
         )
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(NeighborViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,17 +77,12 @@ class ListNeighborsFragment : Fragment(), ListNeighborHandler {
     fun deleteNeighbor(neighbor: Neighbor) {
         // On supprime des datas
         Executors.newSingleThreadExecutor().execute {
-            val application: Application = activity?.application ?: return@execute
-            NeighborRepository.getInstance(application).delete(neighbor)
+            DI.repository.delete(neighbor)
         }
     }
 
     private fun setData() {
-        // Récupérer l'instance de l'application, si elle est null arrêter l'exécution de la méthode
-
-        val application: Application = activity?.application ?: return
-        val neighbors = NeighborRepository.getInstance(application).getNeighbors()
-        neighbors.observe(viewLifecycleOwner) {
+        viewModel.neighbors.observe(viewLifecycleOwner) {
             val adapter = ListNeighborsAdapter(it, this)
             binding.neighborsList.adapter = adapter
         }

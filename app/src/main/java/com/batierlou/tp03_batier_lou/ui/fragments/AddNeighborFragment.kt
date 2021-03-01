@@ -1,6 +1,5 @@
 package com.batierlou.tp03_batier_lou.ui.fragments
 
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,9 @@ import com.basgeekball.awesomevalidation.ValidationStyle
 import com.batierlou.tp03_batier_lou.NavigationListener
 import com.batierlou.tp03_batier_lou.R
 import com.batierlou.tp03_batier_lou.databinding.AddNeighborFragmentBinding
+import com.batierlou.tp03_batier_lou.di.DI
 import com.batierlou.tp03_batier_lou.models.Neighbor
-import com.batierlou.tp03_batier_lou.repositories.NeighborRepository
+import java.util.concurrent.Executors
 import kotlin.random.Random
 
 class AddNeighborFragment : Fragment() {
@@ -46,20 +46,22 @@ class AddNeighborFragment : Fragment() {
         binding.saveButton.setOnClickListener(
             View.OnClickListener {
                 if (mAwesomeValidation.validate()) {
-                    val id: Long = Random.nextLong(from = 0, until = Long.MAX_VALUE)
-                    val name: String = binding.nameField.text.toString()
-                    val avatarUrl: String = binding.imageField.text.toString()
-                    val mail: String = binding.mailField.text.toString()
-                    val tel: String = binding.telField.text.toString()
-                    val about: String = binding.aboutField.text.toString()
-                    val siteUrl: String = binding.siteField.text.toString()
+                    Executors.newSingleThreadExecutor().execute {
+                        DI.repository.createNeighbor(
+                            Neighbor(
+                                id = Random.nextLong(from = 0, until = Long.MAX_VALUE),
+                                name = binding.nameField.text.toString(),
+                                avatarUrl = binding.imageField.text.toString(),
+                                mail = binding.mailField.text.toString(),
+                                tel = binding.telField.text.toString(),
+                                aboutMe = binding.aboutField.text.toString(),
+                                siteUrl = binding.siteField.text.toString(),
+                            )
+                        )
 
-                    neighbor = Neighbor(id, name, avatarUrl, mail, tel, about, false, siteUrl)
-
-                    val application: Application = activity?.application ?: return@OnClickListener
-                    NeighborRepository.getInstance(application).createNeighbor(neighbor)
-
-                    (activity as? NavigationListener)?.showFragment(ListNeighborsFragment())
+                        println("Je crée mon Voisin")
+                        (activity as? NavigationListener)?.showFragment(ListNeighborsFragment())
+                    }
                 }
             }
         )
