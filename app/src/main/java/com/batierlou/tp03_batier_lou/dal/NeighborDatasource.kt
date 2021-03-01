@@ -1,5 +1,6 @@
-package com.batierlou.tp03_batier_lou.data.datasource
+package com.batierlou.tp03_batier_lou.dal
 
+import androidx.lifecycle.LiveData
 import com.batierlou.tp03_batier_lou.models.Neighbor
 
 interface NeighborDatasource {
@@ -7,13 +8,13 @@ interface NeighborDatasource {
      * Get all my Neighbors
      * @return [List]
      */
-    val neighbors: List<Neighbor>
+    val neighbors: LiveData<List<Neighbor>>
 
     /**
      * Deletes a neighbor
      * @param neighbor : Neighbor
      */
-    fun deleteNeighbor(neighbor: Neighbor) : Int
+    fun deleteNeighbor(neighbor: Neighbor)
 
     /**
      * Create a neighbour

@@ -1,13 +1,14 @@
-package com.batierlou.tp03_batier_lou
+package com.batierlou.tp03_batier_lou.ui
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toolbar
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.batierlou.tp03_batier_lou.NavigationListener
+import com.batierlou.tp03_batier_lou.R
 import com.batierlou.tp03_batier_lou.databinding.ActivityMainBinding
-import com.batierlou.tp03_batier_lou.fragments.ListNeighborsFragment
+import com.batierlou.tp03_batier_lou.ui.fragments.ListNeighborsFragment
 
 class MainActivity : AppCompatActivity(), NavigationListener {
 
@@ -34,5 +35,4 @@ class MainActivity : AppCompatActivity(), NavigationListener {
     override fun updateTitle(title: Int) {
         binding.toolbar.setTitle(title)
     }
-
 }

@@ -1,6 +1,7 @@
-package com.batierlou.tp03_batier_lou.fragments
+package com.batierlou.tp03_batier_lou.ui.fragments
 
 import android.app.AlertDialog
+import android.app.Application
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,10 +14,10 @@ import com.batierlou.tp03_batier_lou.NavigationListener
 import com.batierlou.tp03_batier_lou.R
 import com.batierlou.tp03_batier_lou.adapters.ListNeighborHandler
 import com.batierlou.tp03_batier_lou.adapters.ListNeighborsAdapter
-import com.batierlou.tp03_batier_lou.data.NeighborRepository
 import com.batierlou.tp03_batier_lou.databinding.ListNeighborsFragmentBinding
 import com.batierlou.tp03_batier_lou.models.Neighbor
-import kotlin.random.Random
+import com.batierlou.tp03_batier_lou.repositories.NeighborRepository
+import java.util.*
 
 class ListNeighborsFragment : Fragment(), ListNeighborHandler {
 
@@ -44,15 +45,16 @@ class ListNeighborsFragment : Fragment(), ListNeighborHandler {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val neighbors = NeighborRepository.getInstance().getNeighbours()
-        adapter = ListNeighborsAdapter(neighbors, this)
-        binding.neighborsList.adapter = adapter
 
-        binding.addNeighbor.setOnClickListener(View.OnClickListener {
-            (activity as? NavigationListener)?.let {
-                it.showFragment(AddNeighborFragment())
+        setData()
+
+        binding.addNeighbor.setOnClickListener(
+            View.OnClickListener {
+                (activity as? NavigationListener)?.let {
+                    it.showFragment(AddNeighborFragment())
+                }
             }
-        })
+        )
     }
 
     override fun onDeleteNeighbor(neighbor: Neighbor) {
@@ -60,19 +62,28 @@ class ListNeighborsFragment : Fragment(), ListNeighborHandler {
             .setIcon(R.drawable.ic_warning)
             .setTitle("Supprimer un voisin ?")
             .setMessage("Êtes vous sur de vouloir supprimer un voisin ?")
-            .setPositiveButton("supprimer",
-                DialogInterface.OnClickListener { dialog, which -> deleteNeighbor(neighbor, adapter) })
+            .setPositiveButton(
+                "supprimer",
+                DialogInterface.OnClickListener { dialog, which -> deleteNeighbor(neighbor, adapter) }
+            )
             .setNegativeButton("annuler", null)
             .show()
     }
 
     fun deleteNeighbor(neighbor: Neighbor, adapter: ListNeighborsAdapter) {
         // On supprime des datas
-        val deletedItemIndex : Int = NeighborRepository.getInstance().dataSource.deleteNeighbor(neighbor)
+        val application: Application = activity?.application ?: return
+        NeighborRepository.getInstance(application).delete(neighbor)
+    }
 
-        // On supprime de la view
-        binding.neighborsList.removeViewAt(deletedItemIndex)
-        adapter.notifyItemRemoved(deletedItemIndex)
-        adapter.notifyItemRangeChanged(deletedItemIndex, NeighborRepository.getInstance().getNeighbours().size);
+    private fun setData() {
+        // Récupérer l'instance de l'application, si elle est null arrêter l'exécution de la méthode
+
+        val application: Application = activity?.application ?: return
+        val neighbors = NeighborRepository.getInstance(application).getNeighbors()
+        neighbors.observe(viewLifecycleOwner) {
+            val adapter = ListNeighborsAdapter(it, this)
+            binding.neighborsList.adapter = adapter
+        }
     }
 }

@@ -1,8 +1,8 @@
 package com.batierlou.tp03_batier_lou.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.batierlou.tp03_batier_lou.R
 import com.batierlou.tp03_batier_lou.databinding.NeighborItemBinding
@@ -12,9 +12,11 @@ import com.bumptech.glide.request.RequestOptions
 
 class ListNeighborsAdapter(
     items: List<Neighbor>,
-    val callback: ListNeighborHandler
+    private val callback: ListNeighborHandler
 ) : RecyclerView.Adapter<ListNeighborsAdapter.ViewHolder>() {
-    private val mNeighbours: List<Neighbor> = items
+
+    private val mNeighbors: List<Neighbor> = items
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: NeighborItemBinding = NeighborItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
@@ -22,7 +24,8 @@ class ListNeighborsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val neighbor: Neighbor = mNeighbours[position]
+        val neighbor = mNeighbors[position]
+
         // Display Neighbour Name
         holder.binding.itemListName.text = neighbor.name
 
@@ -41,7 +44,7 @@ class ListNeighborsAdapter(
     }
 
     override fun getItemCount(): Int {
-        return mNeighbours.size
+        return mNeighbors.size
     }
 
     class ViewHolder(val binding: NeighborItemBinding) :

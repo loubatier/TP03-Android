@@ -1,4 +1,4 @@
-package com.batierlou.tp03_batier_lou.fragments
+package com.batierlou.tp03_batier_lou.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.basgeekball.awesomevalidation.AwesomeValidation
 import com.basgeekball.awesomevalidation.ValidationStyle
 import com.batierlou.tp03_batier_lou.NavigationListener
 import com.batierlou.tp03_batier_lou.R
-import com.batierlou.tp03_batier_lou.data.NeighborRepository
+import com.batierlou.tp03_batier_lou.repositories.NeighborRepository
 import com.batierlou.tp03_batier_lou.databinding.AddNeighborFragmentBinding
 import com.batierlou.tp03_batier_lou.models.Neighbor
 import kotlin.random.Random
