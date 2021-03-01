@@ -1,9 +1,13 @@
+package com.batierlou.tp03_batier_lou.dal.room
+
 import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.batierlou.tp03_batier_lou.dal.InMemory_NeighborS
+import com.batierlou.tp03_batier_lou.dal.room.daos.NeighborDao
+import com.batierlou.tp03_batier_lou.dal.room.entities.NeighborEntity
 import com.batierlou.tp03_batier_lou.dal.utils.toEntity
 import java.util.concurrent.Executors
 

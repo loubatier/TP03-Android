@@ -1,5 +1,6 @@
 package com.batierlou.tp03_batier_lou.ui.fragments
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,9 @@ import com.basgeekball.awesomevalidation.AwesomeValidation
 import com.basgeekball.awesomevalidation.ValidationStyle
 import com.batierlou.tp03_batier_lou.NavigationListener
 import com.batierlou.tp03_batier_lou.R
-import com.batierlou.tp03_batier_lou.repositories.NeighborRepository
 import com.batierlou.tp03_batier_lou.databinding.AddNeighborFragmentBinding
 import com.batierlou.tp03_batier_lou.models.Neighbor
+import com.batierlou.tp03_batier_lou.repositories.NeighborRepository
 import kotlin.random.Random
 
 class AddNeighborFragment : Fragment() {
@@ -42,22 +43,26 @@ class AddNeighborFragment : Fragment() {
 
         (activity as? NavigationListener)?.updateTitle(R.string.add_fragment_title)
 
-        binding.saveButton.setOnClickListener(View.OnClickListener {
-            if (mAwesomeValidation.validate()) {
-                val id: Long = Random.nextLong(from = 0, until = Long.MAX_VALUE)
-                val name: String = binding.nameField.text.toString()
-                val avatarUrl: String = binding.imageField.text.toString()
-                val mail: String = binding.mailField.text.toString()
-                val tel: String = binding.telField.text.toString()
-                val about: String = binding.aboutField.text.toString()
-                val siteUrl: String = binding.siteField.text.toString()
+        binding.saveButton.setOnClickListener(
+            View.OnClickListener {
+                if (mAwesomeValidation.validate()) {
+                    val id: Long = Random.nextLong(from = 0, until = Long.MAX_VALUE)
+                    val name: String = binding.nameField.text.toString()
+                    val avatarUrl: String = binding.imageField.text.toString()
+                    val mail: String = binding.mailField.text.toString()
+                    val tel: String = binding.telField.text.toString()
+                    val about: String = binding.aboutField.text.toString()
+                    val siteUrl: String = binding.siteField.text.toString()
 
-                neighbor = Neighbor(id, name, avatarUrl, mail, tel, about, false, siteUrl)
-                NeighborRepository.getInstance().dataSource.createNeighbor(neighbor)
+                    neighbor = Neighbor(id, name, avatarUrl, mail, tel, about, false, siteUrl)
 
-                (activity as? NavigationListener)?.showFragment(ListNeighborsFragment())
+                    val application: Application = activity?.application ?: return@OnClickListener
+                    NeighborRepository.getInstance(application).createNeighbor(neighbor)
+
+                    (activity as? NavigationListener)?.showFragment(ListNeighborsFragment())
+                }
             }
-        })
+        )
     }
 
     private fun initValidation() {

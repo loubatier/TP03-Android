@@ -1,6 +1,6 @@
 package com.batierlou.tp03_batier_lou.dal.utils
 
-import NeighborEntity
+import com.batierlou.tp03_batier_lou.dal.room.entities.NeighborEntity
 import com.batierlou.tp03_batier_lou.models.Neighbor
 
 fun NeighborEntity.toNeighbor() = Neighbor(

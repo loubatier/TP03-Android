@@ -1,3 +1,5 @@
+package com.batierlou.tp03_batier_lou.dal.room.entities
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

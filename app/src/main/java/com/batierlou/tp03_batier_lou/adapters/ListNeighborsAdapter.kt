@@ -2,7 +2,6 @@ package com.batierlou.tp03_batier_lou.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.batierlou.tp03_batier_lou.R
 import com.batierlou.tp03_batier_lou.databinding.NeighborItemBinding

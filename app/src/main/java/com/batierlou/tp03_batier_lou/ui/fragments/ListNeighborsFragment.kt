@@ -17,7 +17,7 @@ import com.batierlou.tp03_batier_lou.adapters.ListNeighborsAdapter
 import com.batierlou.tp03_batier_lou.databinding.ListNeighborsFragmentBinding
 import com.batierlou.tp03_batier_lou.models.Neighbor
 import com.batierlou.tp03_batier_lou.repositories.NeighborRepository
-import java.util.*
+import java.util.concurrent.Executors
 
 class ListNeighborsFragment : Fragment(), ListNeighborHandler {
 
@@ -50,9 +50,7 @@ class ListNeighborsFragment : Fragment(), ListNeighborHandler {
 
         binding.addNeighbor.setOnClickListener(
             View.OnClickListener {
-                (activity as? NavigationListener)?.let {
-                    it.showFragment(AddNeighborFragment())
-                }
+                (activity as? NavigationListener)?.showFragment(AddNeighborFragment())
             }
         )
     }
@@ -64,16 +62,18 @@ class ListNeighborsFragment : Fragment(), ListNeighborHandler {
             .setMessage("Êtes vous sur de vouloir supprimer un voisin ?")
             .setPositiveButton(
                 "supprimer",
-                DialogInterface.OnClickListener { dialog, which -> deleteNeighbor(neighbor, adapter) }
+                DialogInterface.OnClickListener { dialog, which -> deleteNeighbor(neighbor) }
             )
             .setNegativeButton("annuler", null)
             .show()
     }
 
-    fun deleteNeighbor(neighbor: Neighbor, adapter: ListNeighborsAdapter) {
+    fun deleteNeighbor(neighbor: Neighbor) {
         // On supprime des datas
-        val application: Application = activity?.application ?: return
-        NeighborRepository.getInstance(application).delete(neighbor)
+        Executors.newSingleThreadExecutor().execute {
+            val application: Application = activity?.application ?: return@execute
+            NeighborRepository.getInstance(application).delete(neighbor)
+        }
     }
 
     private fun setData() {

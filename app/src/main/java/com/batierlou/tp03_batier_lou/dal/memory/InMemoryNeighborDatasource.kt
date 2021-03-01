@@ -11,7 +11,7 @@ class InMemoryNeighborDatasource : NeighborDatasource {
     private val _neighbors = MutableLiveData<List<Neighbor>>()
 
     init {
-        _neighbors.value = InMemory_NeighborS
+        _neighbors.postValue(InMemory_NeighborS)
     }
 
     override val neighbors: LiveData<List<Neighbor>>
@@ -19,12 +19,12 @@ class InMemoryNeighborDatasource : NeighborDatasource {
 
     override fun deleteNeighbor(neighbor: Neighbor) {
         InMemory_NeighborS.remove(neighbor)
-        _neighbors.value = InMemory_NeighborS
+        _neighbors.postValue(InMemory_NeighborS)
     }
 
     override fun createNeighbor(neighbor: Neighbor) {
         InMemory_NeighborS.add(neighbor)
-        _neighbors.value = InMemory_NeighborS
+        _neighbors.postValue(InMemory_NeighborS)
     }
 
     override fun updateFavoriteStatus(neighbor: Neighbor) {

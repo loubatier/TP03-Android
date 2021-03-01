@@ -1,11 +1,10 @@
 package com.batierlou.tp03_batier_lou.dal.room
 
-import NeighborDao
-import NeighborDataBase
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.batierlou.tp03_batier_lou.dal.NeighborDatasource
+import com.batierlou.tp03_batier_lou.dal.room.daos.NeighborDao
 import com.batierlou.tp03_batier_lou.dal.utils.toEntity
 import com.batierlou.tp03_batier_lou.dal.utils.toNeighbor
 import com.batierlou.tp03_batier_lou.models.Neighbor
